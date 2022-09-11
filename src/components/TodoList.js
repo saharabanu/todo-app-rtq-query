@@ -1,11 +1,23 @@
+import { useSelector } from "react-redux";
 import { useGetTodosQuery } from "../features/api/apiSlice";
 import Error from "./pages/Error";
 import TodoLoader from "./pages/TodoLoader";
 import Todo from "./Todo";
 
 export default function TodoList() {
-    const { data: todos, isLoading, isError } = useGetTodosQuery();
+   
+    const {status, colors} = useSelector((state) => state.filters);
 
+
+    let queryString = "";
+    queryString += colors?.map((color) => `color=${color}`).join("&");
+    if (status === "Complete") {
+      queryString += `&completed=${true}`;
+    }
+    if (status === "Incomplete") {
+      queryString += `&completed=${false}`;
+    }
+    const { data: todos, isLoading, isError } = useGetTodosQuery(queryString);
     // decide what to render
     let content = null;
 

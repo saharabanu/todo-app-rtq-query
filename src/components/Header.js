@@ -15,7 +15,8 @@ export default function Header() {
       e.preventDefault();
       addTodo({
         text,
-        completed: false
+        completed: false,
+        color:""
       })
       setText("")
     

@@ -8,8 +8,9 @@ export const apiSlice = createApi({
     tagTypes: ["todos", "todo"],
     endpoints: (builder) => ({
         getTodos: builder.query({
-            query: () => ({
-                url: "/todos",
+            query: (queryString) => ({
+                url: `/todos?${queryString}`,
+
                 
                 
             }),
@@ -30,18 +31,28 @@ export const apiSlice = createApi({
         }),
 
 
-        editVideo: builder.mutation({
-            query: ({ id, data }) => ({
-                url: `/videos/${id}`,
-                method: "PATCH",
-                body: data,
+        // editVideo: builder.mutation({
+        //     query: ({ id, data }) => ({
+        //         url: `/videos/${id}`,
+        //         method: "PATCH",
+        //         body: data,
+        //     }),
+        //     invalidatesTags: (result, error, arg) => [
+        //         "Videos",
+        //         { type: "Video", id: arg.id },
+                
+        //     ],
+        // }),
+        editTodo: builder.mutation({
+            query: ({id, data}) => ({
+              url: `/todos/${id}`,
+              method: "PATCH",
+              body: data,
             }),
-            invalidatesTags: (result, error, arg) => [
-                "Videos",
-                { type: "Video", id: arg.id },
-                { type: "RelatedVideos", id: arg.id },
-            ],
-        }),
+            invalidatesTags: ["todos"],
+          }),
+
+
    
 
 
@@ -55,4 +66,4 @@ export const apiSlice = createApi({
     })
 })
 
-export const {useGetTodosQuery, useGetTodoQuery, useDeleteTodoMutation, useAddTodoMutation} = apiSlice
+export const {useGetTodosQuery, useGetTodoQuery, useDeleteTodoMutation, useAddTodoMutation, useEditTodoMutation} = apiSlice
