@@ -12,13 +12,13 @@ const EditForm = ({setEditMode,text, id}) => {
         editTodo({
           id: id,
           data: {
-            text: text,
+            text: input,
           },
         });
       };
       useEffect(() => {
         if (isSuccess) {
-        //   setEditMode(false);
+          setEditMode(false);
         }
       }, [isSuccess, setEditMode]);
 
