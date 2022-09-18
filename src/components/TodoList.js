@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { useGetTodosQuery } from "../features/api/apiSlice";
 import Error from "./pages/Error";
+import NoTodo from "./pages/NoTodo";
+import Success from "./pages/Success";
 import TodoLoader from "./pages/TodoLoader";
 import Todo from "./Todo";
 
@@ -37,7 +39,7 @@ export default function TodoList() {
     }
 
     if (!isLoading && !isError && todos?.length === 0) {
-        content = <Error message="No Todos found!" />;
+        content = <NoTodo message="No Todos found!" />;
     }
 
     if (!isLoading && !isError && todos?.length > 0) {

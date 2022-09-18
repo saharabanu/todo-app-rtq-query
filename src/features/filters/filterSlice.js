@@ -29,5 +29,13 @@ const filterSlice = createSlice({
 export default filterSlice.reducer;
 export const {colorRemoved, statusChanged, colorSelected} = filterSlice.actions;
 
-// export default filterSlice.reducer;
-// export const {filterByStatus,filterBySearch,pagination} = filterSlice.actions;
+
+// all commpleted   state.map(todo => {
+//     ...todo, completed: true,
+// })
+
+// clear completed 
+// state.filter(todo => !todo.completed)
+
+
+// footers filter 

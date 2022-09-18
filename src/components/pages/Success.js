@@ -2,7 +2,9 @@ import React from 'react'
 
 const Success = () => {
   return (
-    <div className='container'></div>
+    <div className="container">
+           
+        </div>
   )
 }
 

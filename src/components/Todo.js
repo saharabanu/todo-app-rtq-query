@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import cancelImage from "../assets/images/cancel.png";
 import { useDeleteTodoMutation, useEditTodoMutation } from "../features/api/apiSlice";
-import Error from "./pages/Error";
 import EditForm from "./EditForm";
+import { toast } from "react-toastify";
 
 
 
@@ -12,12 +12,12 @@ export default function Todo({todo}) {
    
    const [editTodo] = useEditTodoMutation();
     const {id, text, completed, color} = todo;
-    // const [isEditing, setIsEditing] = useState(false);
 
-    const [deleteTodo, {isSuccess, isLoading , isError}] = useDeleteTodoMutation();
 
-    const handleDelete = () => {
-         if (id) deleteTodo(id)
+    const [deleteTodo, {isSuccess, isError}] = useDeleteTodoMutation();
+
+    const handleDelete = (id) => {
+          deleteTodo(id)
     }
 
     useEffect(() => {
@@ -35,11 +35,11 @@ export default function Todo({todo}) {
 
     const notify = () => {
         if (isSuccess) {
-          alert.success("Todo Deleted Successfully!", {
+          toast.success("Todo Deleted Successfully!", {
             position: "top-center",
           });
         } else if (isError) {
-          alert.error("An Error Occured", {
+          toast.error("An Error Occured", {
             position: "top-center",
           });
         }
@@ -102,7 +102,7 @@ export default function Todo({todo}) {
 
         <div onClick={() => handleColorChanged("red")} className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-red-500 border-red-500 ${color === "red" && "bg-red-500"}`}></div>
 
-        <img onClick={handleDelete}
+        <img onClick={()=>handleDelete(id)}
             src={cancelImage}
             className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
             alt="Cancel"
@@ -111,36 +111,7 @@ export default function Todo({todo}) {
     </div>
 
 
-    {/* extra   */}
- 
-      <div >
-        {/* <div >
-          <input type="checkbox" checked={completed} onChange={() => handleStatusChange(id)} className="opacity-0 absolute rounded-full" />
-          {completed && (
-            <svg className="fill-current w-3 h-3 text-green-500 pointer-events-none" viewBox="0 0 20 20">
-              <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-            </svg>
-          )}
-        </div>
-        {editMode && (
-          <div className="absolute m-0 p-0 w-1/3">
-            <Modal setEditMode={setEditMode} text={text} id={id} />
-          </div>
-        )} */}
-        {/* <div onDoubleClick={handleEdit} className={`select-none flex-1 ${completed && "line-through"}`}>
-          {text}
-        </div> */}
-
-        {/* <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-green-500 border-green-500 ${color === "green" && "bg-green-500"}`} onClick={() => handleColorChange(id, "green")}></div>
-
-        <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-yellow-500 border-yellow-500 ${color === "yellow" && "bg-yellow-500"}`} onClick={() => handleColorChange(id, "yellow")}></div>
-
-        <div className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-red-500 border-red-500 ${color === "red" && "bg-red-500"}`} onClick={() => handleColorChange(id, "red")}></div> */}
-
-        {/* <img src={cancelImg} className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" alt="Cancel" onClick={() => handleDelete(id)} />
-
-        <img src={editImg} className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" alt="edit" onClick={() => handleEdit(id)} /> */}
-      </div>
+   
     </> 
     );
 }

@@ -2,14 +2,21 @@ import { useState } from "react";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
-import { useAddTodoMutation } from "../features/api/apiSlice";
+import { useAddTodoMutation, useCompletedAllTodoMutation, useDeleteTodoMutation, useEditTodoMutation, useGetTodosQuery } from "../features/api/apiSlice";
 import Error from "./pages/Error";
 import Success from "./pages/Success";
 
 export default function Header() {
     const [addTodo , { isLoading, isError, isSuccess}] = useAddTodoMutation();
+    const [deleteTodo] = useDeleteTodoMutation();
+    const [editTodo ,{data:todos}] = useEditTodoMutation();
+
+   const  {data}= useGetTodosQuery()
+    // const [completedAllTodo] = useCompletedAllTodoMutation();
+  
 
     const [text, setText] = useState("");
+
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -23,7 +30,18 @@ export default function Header() {
     }
 
 
+ const completeClear = () => {
+   data?.forEach(todo => {
+    if(todo.completed === true) deleteTodo(todo.id)
+   })
+  };
 
+  const handleAllCompleted = () => {
+    console.log(data,"clicked");
+    data?.forEach(todo => {
+        return editTodo({id:todo.id, data:{completed:true}})
+       })
+}
 
 
     return (
@@ -53,11 +71,12 @@ export default function Header() {
             </>
 
             <ul className="flex justify-between my-4 text-xs text-gray-500">
-                <li className="flex space-x-1 cursor-pointer">
+                <li onClick={handleAllCompleted} className="flex space-x-1 cursor-pointer">
                     <img className="w-4 h-4" src={tickImage} alt="Complete" />
-                    <span>Complete All Tasks</span>
+                    <span  >Complete All Tasks</span>
                 </li>
-                <li className="cursor-pointer">Clear completed</li>
+
+                <li onClick={completeClear} className="cursor-pointer">Clear completed</li>
             </ul>
         </div>
     );

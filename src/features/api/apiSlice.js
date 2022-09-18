@@ -3,8 +3,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     reducerPath:"api",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://desolate-headland-58487.herokuapp.com",
+        baseUrl: "https://server-api-sahara.herokuapp.com",
     }),
+    // https://desolate-headland-58487.herokuapp.com
+
+    // https://server-api-sahara.herokuapp.com
     tagTypes: ["todos", "todo"],
     endpoints: (builder) => ({
         getTodos: builder.query({
@@ -52,6 +55,15 @@ export const apiSlice = createApi({
             invalidatesTags: ["todos"],
           }),
 
+    //    completedAllTodo: builder.mutation({
+    //         query: ({id, data}) => ({
+    //           url: `/todos/${id}`,
+    //           method: "PATCH",
+    //           body: data,
+    //         }),
+    //         invalidatesTags: ["todos"],
+    //       }),
+ 
 
    
 
@@ -66,4 +78,4 @@ export const apiSlice = createApi({
     })
 })
 
-export const {useGetTodosQuery, useGetTodoQuery, useDeleteTodoMutation, useAddTodoMutation, useEditTodoMutation} = apiSlice
+export const {useGetTodosQuery, useGetTodoQuery, useDeleteTodoMutation,useCompletedAllTodoMutation ,useAddTodoMutation, useEditTodoMutation} = apiSlice

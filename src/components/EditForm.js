@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useEditTodoMutation } from '../features/api/apiSlice';
 
 const EditForm = ({setEditMode,text, id}) => {
-    // {setEditMode, text, id}
-    // const [text, setText] = useState(text);
+    
     const [editTodo , {isSuccess}] = useEditTodoMutation();
     const [input, setInput] = useState(text);
 
